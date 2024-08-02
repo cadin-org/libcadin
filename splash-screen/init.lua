@@ -1,40 +1,41 @@
+local game_screen = require 'libcadin.game-screen'
+local mocha = require 'libcadin.catppuccin'
+local window = require 'libcadin.window'
+
 local M = {}
 
 M.canvas = nil
-M.x = nil
-M.y = nil
+M.pos_x = nil
+M.pos_y = nil
 
 local function text_center(text)
   local current_font = love.graphics.getFont()
   local text_height = current_font:getHeight()
   local text_width = current_font:getWidth(text)
 
-  local x = (love.graphics.getWidth() - text_width) / 2
-  local y = (love.graphics.getHeight() - text_height) / 2
+  local x = (window.width - text_width) / 2
+  local y = (window.height - text_height) / 2
 
   return x, y, text_width
 end
 
-local function splash_colored_text(r, g, b, text)
-  local red, green, blue = love.math.colorFromBytes(r, g, b)
+local function splash_colored_text(color, text)
   local x, y, text_width = text_center(text)
 
-  local colored_text = { { red, green, blue }, text }
+  local colored_text = { color, text }
 
   love.graphics.printf(colored_text, x, y, text_width, 'center')
   -- TODO: Add fade in/fade out effect
 end
 
-function M.load(width, height)
-  local x_center = love.graphics.getWidth() / 2
-  local y_center = love.graphics.getHeight() / 2
+function M.load()
+  M.canvas = love.graphics.newCanvas(game_screen.width, game_screen.height)
 
-  M.x = x_center - (width / 2)
-  M.y = y_center - (height / 2)
+  M.pos_x = game_screen.pos_x
+  M.pos_y = game_screen.pos_y
 
-  M.canvas = love.graphics.newCanvas(width, height)
   love.graphics.setCanvas(M.canvas)
-  love.graphics.clear(love.math.colorFromBytes(30, 30, 46))
+  love.graphics.clear(mocha.BASE)
   love.graphics.setCanvas()
 end
 
@@ -44,12 +45,12 @@ function M.start(time)
     return
   end
 
-  love.graphics.draw(M.canvas, M.x, M.y)
+  love.graphics.draw(M.canvas, M.pos_x, M.pos_y)
 
   if time >= 3 and time < 6 then
-    splash_colored_text(243, 139, 168, 'LÖVE')
+    splash_colored_text(mocha.RED, 'LÖVE')
   elseif time >= 6 and time < 9 then
-    splash_colored_text(205, 214, 244, 'cadin')
+    splash_colored_text(mocha.TEXT, 'cadin')
   end
 end
 
