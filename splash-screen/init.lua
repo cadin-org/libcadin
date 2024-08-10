@@ -31,8 +31,8 @@ end
 function M.load()
   M.canvas = love.graphics.newCanvas(game_screen.width, game_screen.height)
 
-  M.pos_x = game_screen.pos_x
-  M.pos_y = game_screen.pos_y
+  M.pos_x = game_screen.pos_x0
+  M.pos_y = game_screen.pos_y0
 
   love.graphics.setCanvas(M.canvas)
   love.graphics.clear(mocha.BASE)
