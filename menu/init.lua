@@ -1,9 +1,12 @@
 local input = require 'libcadin.input'
+local fonts = require 'libcadin.fonts'
 local MenuOption = require 'libcadin.menu.option'
 
 local M = {}
 
-function M.single_player_options(menu_font)
+local menu_font = fonts.ps2p_medium
+
+function M.single_player_options()
   return {
     MenuOption:new('Play', menu_font, 'change_mode', 'single_player', true),
     MenuOption:new('Scoreboard not available', menu_font, 'quit', nil, false),
@@ -11,7 +14,7 @@ function M.single_player_options(menu_font)
   }
 end
 
-function M.multi_player_options(menu_font)
+function M.multi_player_options()
   return {
     MenuOption:new('1 Player', menu_font, 'change_mode', 'single_player', true),
     MenuOption:new('2 Players', menu_font, 'change_mode', 'multiplayer', false),
@@ -20,7 +23,7 @@ function M.multi_player_options(menu_font)
   }
 end
 
-function M.pause_options(menu_font)
+function M.pause_options()
   return {
     MenuOption:new('Resume', menu_font, 'change_state', 'playing', true),
     MenuOption:new('Restart', menu_font, 'new_game', nil, false),
